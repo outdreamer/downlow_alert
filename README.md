@@ -22,12 +22,21 @@ Downlow Alert notifies you of nearby stores, hooking into hardware functions wit
 
 # Installation
 
-	Run the following to setup the project:
+	Run the following to setup the project if you'd like to use browserify instead of nwjs (not recommended):
 
 		npm install
 		browserify nodebot.js -o nodebot_bundle.js 
 
 	The above is invalid if you want to use NW.
+
+	If you want to use NW (recommended) and don't have it installed, you can download it here:
+
+		http://nwjs.io/
+
+	Take note of the directory path to your install, if you move it out of your default downloads folder. You'll be referencing the path to run the executable, unless you drag it into your project root folder (./downlow_alert).
+
+	Full install instructions are here:
+		http://docs.nwjs.io/en/latest/For%20Users/Getting%20Started/
 
 	If you have nwjs installed on your computer, and are using a Mac, the directory path is:
 
@@ -43,11 +52,13 @@ Downlow Alert notifies you of nearby stores, hooking into hardware functions wit
 
 		/PATH/nwjs.app/Contents/MacOS/nwjs .
 
-	The above command is run from project root
+	The above command is run from project root.
 
 	If you use nw instead of bundling your dependencies with browserify, you'll see a popup window instead of viewing index_bundle.html in the browser.
 
 	If you want to use browserify, view index_bundle.html in the browser to test your output according to user store type selections.
+
+	Copy config/sample_settings.json to config/settings.json and add your Google API key to the key element in the JSON inside settings.json.
 
 # Notes
 
