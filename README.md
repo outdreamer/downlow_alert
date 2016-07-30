@@ -16,18 +16,42 @@ Downlow Alert notifies you of nearby stores, hooking into hardware functions wit
 
 	Tasks remaining in this project include creating an algorithm involving local metrics to assess the fun and danger scores of the neighborhood you're approaching.
 
+	Translate this to use nw so it's independent of browserify.
+
 	This is meant for use on mobile, when you're in an unfamiliar neighborhood.
 
 # Installation
 
 	Run the following to setup the project:
 
-	npm install
-	browserify nodebot.js -o nodebot_bundle.js 
+		npm install
+		browserify nodebot.js -o nodebot_bundle.js 
+
+	The above is invalid if you want to use NW.
+
+	If you have nwjs installed on your computer, and are using a Mac, the directory path is:
+
+		/PATH/nwjs.app/Contents/MacOS/nwjs
+
+	where PATH represents the location where you've installed nwjs.
+
+	If you drag nwjs.app to this project root, you'll be able to run your app with the following command:
+
+		nw .
+
+	Otherwise use the full path to the nwjs executable or add the path to your PATH variable so you can use the above syntax.
+
+		/PATH/nwjs.app/Contents/MacOS/nwjs .
+
+	The above command is run from project root
+
+	If you use nw instead of bundling your dependencies with browserify, you'll see a popup window instead of viewing index_bundle.html in the browser.
+
+	If you want to use browserify, view index_bundle.html in the browser to test your output according to user store type selections.
 
 # Notes
 
-	Designed with Arduino Uno in mind, but applicable to all devices that support RGB color events.
+	Designed with Arduino Uno in mind, but applicable to all devices that support RGB colors.
 
 # Example API Request
 

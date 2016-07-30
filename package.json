@@ -1,5 +1,5 @@
 {
-  "name": "alerts-with-johnny-five",
+  "name": "downlow-alerts-with-jfive",
   "main": "index.html",
   "dependencies": {
     "johnny-five": "^0.9.30",

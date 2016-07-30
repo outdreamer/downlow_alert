@@ -1,0 +1,1 @@
+Put nwjs.app in this directory if you have it installed locally.

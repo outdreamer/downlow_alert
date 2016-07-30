@@ -1,6 +1,6 @@
 global.jQuery = require("jQuery")
 (function($){
-
+alert('after requiring jquery');
 	var five = require("johnny-five");
 
 	/*
@@ -26,7 +26,7 @@ global.jQuery = require("jQuery")
 
 			//send type param to start function
 			var type = $(this).val();
-			console('selected ' + type);
+			console.log('selected ' + type);
 			stopEvents();
 			start(type);
 
@@ -89,6 +89,9 @@ global.jQuery = require("jQuery")
 					var current_location = getLocation();
 
 					if (typeof current_location == "object") {
+
+						alert("current_location");
+						alert(current_location);
 
 						var nearestType = getNearestType(current_location, type);
 
