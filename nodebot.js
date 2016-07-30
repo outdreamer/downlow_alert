@@ -1,119 +1,123 @@
 global.jQuery = require("jquery")
+var five = require("johnny-five"); //, board, led;
 
 (function($){
 
+
+	/*
+	  to do:
+		we would like to check the wifi/arduino connection at a large interval
+		and execute the location service at a small interval
+
+		if the wifi connection is bad, 
+		we want to prevent the location service from executing (stop the timer)
+		and display an error message to the user saying we cant access the service in their zone
+	*/
+
+
 	//initialize variables
-	var colors_by_type = { starbucks : 'green', bar : 'gold', crime : 'red' };
-	var types = [ starbucks, bar, crime ];
-	var timeouts = [];
 
-	//set events in dom
-	$('#store_types').on('change', function(){
+		var colors_by_type = { bar : 'gold', liquor_store : 'green', hospital : 'red' };
+		var types = [ 'bar', 'liquor_store', 'hospital' ];
+		var timeouts = [];
 
-		//send type param to start function
-		var type = $(this).val();
-		alert('selected ' + type);
-		stopTimer();
-		start(type);
+	//set DOM events
 
-	});
+		$('#store_types').on('change', function(){
 
-	$('#reset').on('click', function() {
+			//send type param to start function
+			var type = $(this).val();
+			console('selected ' + type);
+			stopEvents();
+			start(type);
 
-		$('#store_types').each(function(idx, sel) {
-		  $(sel).find('option :eq(0)').attr('selected', true);
 		});
 
-	});
+		$('#reset').on('click', function() {
 
-	//define functions
+			$('#store_types').each(function(idx, sel) {
+			  $(sel).find('option :eq(0)').attr('selected', true);
+			});
 
-	//we would like to check the wifi/arduino connection at a large interval
-	//and execute the location service at a small interval
+		});
 
-	//if the wifi/arduino connection is null, 
-	//we want to prevent the location service from executing (stop the timer)
-	//and display an error message to the user saying we cant access the service in their zone
+		//define functions
 
-	function stopTimer() {
+		function stopEvents() {
 
-		for (var i = 0; i < timeouts.length; i++) {
-			clearTimeout(timeouts[i]);
-		}
-		//quick reset of the timer array you just cleared
-		timeouts = [];
-
-	}
-
-	function checkWifi() {
-
-		var return_val = false;
-
-		var test_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
-
-		$.ajax({
-
-			type: "get", 
-			async: false,
-			url: test_url,
-			success: function (data, text) {
-			    return_val = true;
-			},
-			error: function (request, status, error) {
-			    alert(request.responseText);
-			    return_val = false;
+			for (var i = 0; i < timeouts.length; i++) {
+				clearTimeout(timeouts[i]);
 			}
+			//quick reset of the timer array you just cleared
+			timeouts = [];
 
-		});
+		}
 
-		console.log('check wifi ' + return_val);
+		function checkWifi() {
 
-	}
+			var test_url = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
+			var wifi_status = false;
+
+			$.ajax({
+
+				type: "get", 
+				async: false,
+				url: test_url,
+				success: function (data, text) {
+				    wifi_status = true;
+				},
+				error: function (request, status, error) {
+				    wifi_status = false;
+				}
+
+			});
+
+			console.log('check wifi ' + wifi_status);
+			return wifi_status;
+
+		}
 
 		function start(type) {
-			alert('start');
 
-			    timeouts.push( setTimeout(function () {
+			stopEvents();
 
-						var checkWifi = checkWifi();
+		    timeouts.push( setTimeout(function () {
 
-						if (checkWifi) {
+				var checkWifi = checkWifi();
 
-							var current_location = getLocation();
+				if (checkWifi) {
 
-							if (typeof current_location == object) {
+					var current_location = getLocation();
 
-								alert(current_location);
+					if (typeof current_location == "object") {
 
-								var nearestType = getNearestType(current_location, type);
+						var nearestType = getNearestType(current_location, type);
 
-				    			/* nearestType is object with properties: nearest_store_distance and nearest_store_type */
-								if (nearestType != undefined && typeof nearestType == object) {
-									var nearest_type_color = colors_by_type[nearestType];
-									var flashedLight = flashLight(nearest_type_color);
-								}
+			    		/* nearestType is object with properties: nearest_store_distance and nearest_store_type */
 
-							} else if (typeof current_location == string) {
+						if (nearestType != undefined && typeof nearestType == object) {
 
-								alert('could not find current location');
-
-							}
+							var nearest_type_color = colors_by_type[nearestType];
+							var flashedLight = flashLight(nearest_type_color);
 
 						}
 
-			        if (exit) {
-			          return;
-			        }
+					} else if (typeof current_location == "string") {
 
-		    }, 1000) );
+						console.log('could not find current location');
+
+					}
+
+				}
+
+
+		    }, 10000) );
 
 		}
 
 		function getLocation() {
 
-			//fetch geocode
-			//need to consider whether location will be irrelevant by the time it fetches the location
-			//check speed of function with timestamp as param
+			//to do: check speed of function with timestamp as param
 
 			if (navigator.geolocation) {
 
@@ -123,19 +127,88 @@ global.jQuery = require("jquery")
 
 			} else {
 
-			    return "Geolocation is not supported by this browser.";
+			    return "Can't find your current location from this browser.";
 
 			}
 
 		}
 
-		function findStores(type) {
+		function findStores(current_location, type) {
 
-			//find locations of nearby stores of certain type
-			//returns array of locations
-			//need to call apis that provide lat/long of starbucks, bars, high-crime neighborhoods
+			// find locations of nearby stores of certain type
 
 			/* stores is an object containing the lat,lng, and store_type of nearby stores within 5 k*/
+
+			//multiple type queries are deprecated, can only use one type at a time and compare distances returned
+			//var all_supported_types = 'bar|liquor_store|hospital'; 
+
+			var stores = {};
+			var google_url = '';
+			var google_key = '';
+
+			$.ajax({
+
+				type: "get", 
+				async: false,
+				url: 'config/settings.json',
+				success: function (data, text) {
+
+				    google_key = data.key;
+				    google_url = data.url;
+				},
+				error: function (request, status, error) {
+					alert('here');
+				    alert(request.responseText);
+				}
+
+			});
+
+			var api_url = google_url;
+			api_url = "&location=" + location.coords.latitude + ",";
+			api_url += location.coords.longitude;
+			api_url += '&radius=1000';
+			api_url += type != 'all' ? '&type=' + this_type : '';
+			api_url += keyword != '' ? '&keyword=' + keyword : '';
+
+			$.ajax({
+
+				type: "get", 
+				async: false,
+				url: api_url,
+				success: function (data, text) {
+
+				    if (data.status == "OK") {
+
+				    	var results = data.results;
+				    	var results_count = count(results);
+
+				    	console.log('results count ' + results_count);
+				    	console.log(results);
+
+				    	if (results_count > 0) {
+
+					    	for (var key in results) {
+
+					    		var this_lat = results[key].geometry.location.lat;
+					    		var this_lng = results[key].geometry.location.lng;
+					    		var this_type = type;
+					    		var this_store = { store_type: type, store_lat: this_lat, store_lng: this_lng };
+					    		stores.push(this_store);
+
+					    	}
+
+				    	}
+
+				    }
+				},
+				error: function (request, status, error) {
+					alert('here');
+				    alert(request.responseText);
+				}
+
+			});
+
+			return stores;
 
 		}
 
@@ -167,6 +240,7 @@ global.jQuery = require("jquery")
 			var min = Infinity, max = -Infinity;
 			var i = 0;
 			var k = 0;
+			var j = 0;
 
 			//returns nearest_store object
 			var nearest_store = { nearest_store_type: "", nearest_store_distance: ""};
@@ -174,15 +248,30 @@ global.jQuery = require("jquery")
 			if (type == null) {
 
 				//get all types
-				stores = findStores('all');
+				for (j = 0; j < types.length; j++) {
+
+					console.log('finding nearby stores for type ' + types[j]);
+					this_type_stores = findStores(current_location, types[j]);
+					stores = stores + this_type_stores;
+
+					j++;
+
+				}
 
 			} else {
+
 				//get user specified types
-				stores = findStores(type);
+				console.log('finding nearby stores for type ' + type);
+				stores = findStores(current_location, type);
 
 			}
 
+			console.log('final stores object');
+			console.log(stores);
+
 			/* stores is an object containing the lat,lng, and store_type of nearby stores within 5 k*/
+
+			//now that we have nearby stores, lets find the nearest one
 
 			//iterate through stores object to check distance from current location
 			for (var store in stores) {
@@ -230,21 +319,37 @@ global.jQuery = require("jquery")
 
 		}
 
-		function flashLight(type) {
+		function flashLight(color_by_type) {
+
+			console.log('flashLight flashing color ' + color_by_type);
+
+			var pin_by_color = {
+				red: "FF0000", 
+				orange: "FF7F00", 
+				yellow: "FFFF00", 
+				green: "00FF00", 
+				blue: "0000FF", 
+				purple: "4B0082", 
+				lavender: "8F00FF"
+			};
 
 			//execute call to arduino to flash a light
-			var five = require("johnny-five"),
-			  board,
-			  led,
-			  motor;
 
   			var board = new five.Board();
 
 			board.on("ready", function() {
 
-			  var led = new five.Led(13);
+			  var pin_color = pin_by_color[color_by_type];
+			  var led = new five.Led.RGB({
+			    pins: {
+			      red: 6,
+			      green: 5,
+			      blue: 3
+			    }
+			  });
+			  led.color(pin_color);
 			  led.blink(500);
-			  
+
 			});
 		}
 });

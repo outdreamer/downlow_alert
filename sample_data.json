@@ -1,0 +1,48 @@
+{
+   "html_attributions" : [],
+   "results" : [
+      {
+         "geometry" : {
+            "location" : {
+               "lat" : 38.80655360000001,
+               "lng" : -77.0413552
+            },
+            "viewport" : {
+               "northeast" : {
+                  "lat" : 38.80676944999999,
+                  "lng" : -77.04131289999999
+               },
+               "southwest" : {
+                  "lat" : 38.80648165000001,
+                  "lng" : -77.0413693
+               }
+            }
+         },
+         "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+         "id" : "72068786f5f184f39e845b8f7c858b9fce89fb42",
+         "name" : "Bilbo Baggins Global Restaurant",
+         "opening_hours" : {
+            "open_now" : true,
+            "weekday_text" : []
+         },
+         "photos" : [
+            {
+               "height" : 1536,
+               "html_attributions" : [
+                  "\u003ca href=\"https://maps.google.com/maps/contrib/116856256578526214369/photos\"\u003eBilbo Baggins Global Restaurant\u003c/a\u003e"
+               ],
+               "photo_reference" : "CoQBcwAAAML-m17pQ2xDU9Zd_BKqNd6c4cGlHLATuuU5R_4q8LmEpaXNVuEhqoptsDqCuw38rmnVuzNuBYkj6WKz9ju-GB3DExxl2IYWEF53woq0TS3wd7sJFYZm_qrFcdqisqHF_tJdcbw2gisuIIQ3V40WMhsRd9jeJLBdOGnGJTCEcUXgEhDFTni1a7aWJBf_edagPfJhGhRzJi3oUvbo3q6i9_p5un4KKELCdg",
+               "width" : 2048
+            }
+         ],
+         "place_id" : "ChIJi0QCWPawt4kRMPlR8tDXzdc",
+         "price_level" : 2,
+         "rating" : 3.6,
+         "reference" : "CoQBcwAAAEJxEfaHE7O9YkhU7kC-bewhd77k_NSDqhdvR62wf1noZNkhkl2fYym9BKwiRkI0AZiVFbBXuvsFUl77pG0Yzj9rFa0wFgfX4Uhf0Yg9phwtS-S2zgXueO8bjqZf9pIMXgegPRS9D1oO44jqZNqltwCiAPhfL77l6gPTbH22RZzYEhBnQET-GPD230IYoDU3EcCWGhRLET0CsCrkagPmS9pRU3En8VdwCw",
+         "scope" : "GOOGLE",
+         "types" : [ "restaurant", "bar", "food", "point_of_interest", "establishment" ],
+         "vicinity" : "208 Queen Street, Alexandria"
+      }
+   ],
+   "status" : "OK"
+}
