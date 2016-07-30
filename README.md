@@ -38,12 +38,14 @@ Downlow Alert notifies you of nearby stores, hooking into hardware functions wit
 	Sample data returned from a Google Place API request is in the file: 
 		sample_data.json
 
+# Testing
+	
+	Run the following to receive a validation status from the nodebot workshop tool from project root:
+		nodebot-workshop verify
 
 # Additional Types
 
-	Google Place Search supports the following:
-
-
+	Google Place Search supports the following place types in its type parameter:
 
 	    accounting
 	    airport

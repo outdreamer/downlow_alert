@@ -1,8 +1,7 @@
-global.jQuery = require("jquery")
-var five = require("johnny-five"); //, board, led;
-
+global.jQuery = require("jQuery")
 (function($){
 
+	var five = require("johnny-five");
 
 	/*
 	  to do:
@@ -278,7 +277,7 @@ var five = require("johnny-five"); //, board, led;
 
 				console.log('iterating through nearby stores');
 
-				if (stores.hasOwnProperty(store) {
+				if (stores.hasOwnProperty(store)) {
 
 					console.log(key + " -> " + p[key]);
 
@@ -296,7 +295,7 @@ var five = require("johnny-five"); //, board, led;
 
 			for (var d in distances) {
 				console.log('iterating through distances of stores object');
-				if (distances.hasOwnProperty(d) {
+				if (distances.hasOwnProperty(d)) {
 
 					console.log(distances[d]);
 
