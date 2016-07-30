@@ -1,0 +1,6 @@
+config/settings.json
+nwjs.app
+nodebot_bundle.js
+npm-debug.log
+node_modules
+.DS_Store

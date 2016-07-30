@@ -1,6 +1,5 @@
 global.jQuery = require("jQuery")
 (function($){
-alert('after requiring jquery');
 	var five = require("johnny-five");
 
 	/*
@@ -90,8 +89,8 @@ alert('after requiring jquery');
 
 					if (typeof current_location == "object") {
 
-						alert("current_location");
-						alert(current_location);
+						console.log("current_location");
+						console.log(current_location);
 
 						var nearestType = getNearestType(current_location, type);
 
@@ -159,8 +158,7 @@ alert('after requiring jquery');
 				    google_url = data.url;
 				},
 				error: function (request, status, error) {
-					alert('here');
-				    alert(request.responseText);
+				    console.log(request.responseText);
 				}
 
 			});
@@ -204,8 +202,7 @@ alert('after requiring jquery');
 				    }
 				},
 				error: function (request, status, error) {
-					alert('here');
-				    alert(request.responseText);
+				    console.log(request.responseText);
 				}
 
 			});

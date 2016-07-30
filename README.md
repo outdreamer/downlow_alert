@@ -36,6 +36,7 @@ Downlow Alert notifies you of nearby stores, hooking into hardware functions wit
 	Take note of the directory path to your install, if you move it out of your default downloads folder. You'll be referencing the path to run the executable, unless you drag it into your project root folder (./downlow_alert).
 
 	Full install instructions are here:
+	
 		http://docs.nwjs.io/en/latest/For%20Users/Getting%20Started/
 
 	If you have nwjs installed on your computer, and are using a Mac, the directory path is:
