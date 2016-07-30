@@ -2,8 +2,8 @@
   "name": "downlow-alerts-with-jfive",
   "main": "index.html",
   "dependencies": {
+    "builtin-modules": "^1.1.1",
     "johnny-five": "^0.9.30",
-    "jQuery": "^1.7.4",
     "jsdom": "^9.4.1",
     "location": "^0.0.1",
     "navigator": "^1.0.1",

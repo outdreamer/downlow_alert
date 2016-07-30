@@ -1,5 +1,6 @@
-global.jQuery = require("jQuery")
 (function($){
+  $(document).ready(function() {
+  	
 	var five = require("johnny-five");
 
 	/*
@@ -22,7 +23,6 @@ global.jQuery = require("jQuery")
 	//set DOM events
 
 		$('#store_types').on('change', function(){
-
 			//send type param to start function
 			var type = $(this).val();
 			console.log('selected ' + type);
@@ -34,7 +34,11 @@ global.jQuery = require("jQuery")
 		$('#reset').on('click', function() {
 
 			$('#store_types').each(function(idx, sel) {
+				console.log((sel).find('option :eq(0)').attr('selected'));
+				console.log((sel).find('option :eq(0)').val());
+
 			  $(sel).find('option :eq(0)').attr('selected', true);
+
 			});
 
 		});
@@ -351,5 +355,6 @@ global.jQuery = require("jQuery")
 
 			});
 		}
-});
+  });
+})(jQuery);
 
