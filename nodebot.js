@@ -34,6 +34,13 @@
 		$('#reset').on('click', function() {
 
 			$('#store_types').val('all');
+
+		});
+
+		$('#submit').on('click', function() {
+
+			var store_type_selected = $('#store_types').val();
+			start(store_type_selected);
 			
 		});
 
@@ -69,6 +76,7 @@
 			});
 
 			console.log('check wifi ' + wifi_status);
+			
 			return wifi_status;
 
 		}
