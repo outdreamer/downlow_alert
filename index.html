@@ -11,11 +11,12 @@
 
   <body>
     <h1>NW.js v0.13 + Johnny-Five + GeoLocating to notify of nearby store types</h1>
-    <div id="store_types">
+    <div id="wrapper">
     	<h2>Please select a store type to detect near your location:</h2>
-    	<select>
+    	<select id="store_types">
     		<option name="all" value="all">All</option>
-    		<option name="starbucks" value="starbucks">Starbucks</option>
+    		<option name="Coffee" value="Coffee">Coffee</option>
+            <option name="liquor_store" value="liquor_store">Liquor Store</option>
     		<option name="bar" value="bar">Bar</option>
     		<option name="crime" value="crime">Crime</option>
     		<option name="hospital" value="doctors">Doctors</option>

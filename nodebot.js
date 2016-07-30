@@ -1,6 +1,6 @@
 (function($){
   $(document).ready(function() {
-  	
+
 	var five = require("johnny-five");
 
 	/*
@@ -33,14 +33,8 @@
 
 		$('#reset').on('click', function() {
 
-			$('#store_types').each(function(idx, sel) {
-				console.log((sel).find('option :eq(0)').attr('selected'));
-				console.log((sel).find('option :eq(0)').val());
-
-			  $(sel).find('option :eq(0)').attr('selected', true);
-
-			});
-
+			$('#store_types').val('all');
+			
 		});
 
 		//define functions
